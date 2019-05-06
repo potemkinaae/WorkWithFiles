@@ -96,7 +96,6 @@
             this.MSFile.Name = "MSFile";
             this.MSFile.Size = new System.Drawing.Size(48, 20);
             this.MSFile.Text = "Файл";
-            this.MSFile.Click += new System.EventHandler(this.MSFile_Click);
             // 
             // TSFileCreate
             // 
@@ -114,26 +113,25 @@
             this.TSFileOpen.Name = "TSFileOpen";
             this.TSFileOpen.Size = new System.Drawing.Size(180, 22);
             this.TSFileOpen.Text = "Открыть";
-            this.TSFileOpen.Click += new System.EventHandler(this.TSFileOpen_Click_1);
             // 
             // MenuOpenTextFile
             // 
             this.MenuOpenTextFile.Name = "MenuOpenTextFile";
-            this.MenuOpenTextFile.Size = new System.Drawing.Size(180, 22);
+            this.MenuOpenTextFile.Size = new System.Drawing.Size(165, 22);
             this.MenuOpenTextFile.Text = "Текстовый файл";
             this.MenuOpenTextFile.Click += new System.EventHandler(this.MenuOpenTextFile_Click);
             // 
             // MenuOpenBinaryFile
             // 
             this.MenuOpenBinaryFile.Name = "MenuOpenBinaryFile";
-            this.MenuOpenBinaryFile.Size = new System.Drawing.Size(180, 22);
+            this.MenuOpenBinaryFile.Size = new System.Drawing.Size(165, 22);
             this.MenuOpenBinaryFile.Text = "Бинарный файл";
             this.MenuOpenBinaryFile.Click += new System.EventHandler(this.БинарныйФайлToolStripMenuItem_Click);
             // 
             // MenuOpenXMLFile
             // 
             this.MenuOpenXMLFile.Name = "MenuOpenXMLFile";
-            this.MenuOpenXMLFile.Size = new System.Drawing.Size(180, 22);
+            this.MenuOpenXMLFile.Size = new System.Drawing.Size(165, 22);
             this.MenuOpenXMLFile.Text = "XML файл";
             this.MenuOpenXMLFile.Click += new System.EventHandler(this.MenuOpenXMLFile_Click);
             // 
@@ -142,6 +140,7 @@
             this.TSFileSave.Name = "TSFileSave";
             this.TSFileSave.Size = new System.Drawing.Size(180, 22);
             this.TSFileSave.Text = "Сохранить";
+            this.TSFileSave.Click += new System.EventHandler(this.TSFileSave_Click);
             // 
             // TSFileSaveAs
             // 
@@ -190,35 +189,35 @@
             // TSEditAdd
             // 
             this.TSEditAdd.Name = "TSEditAdd";
-            this.TSEditAdd.Size = new System.Drawing.Size(174, 22);
+            this.TSEditAdd.Size = new System.Drawing.Size(180, 22);
             this.TSEditAdd.Text = "Добавить";
             this.TSEditAdd.Click += new System.EventHandler(this.TSEditAdd_Click);
             // 
             // TSEditDelete
             // 
             this.TSEditDelete.Name = "TSEditDelete";
-            this.TSEditDelete.Size = new System.Drawing.Size(174, 22);
+            this.TSEditDelete.Size = new System.Drawing.Size(180, 22);
             this.TSEditDelete.Text = "Удалить";
             this.TSEditDelete.Click += new System.EventHandler(this.TSEditDelete_Click);
             // 
             // TSEditEdObject
             // 
             this.TSEditEdObject.Name = "TSEditEdObject";
-            this.TSEditEdObject.Size = new System.Drawing.Size(174, 22);
+            this.TSEditEdObject.Size = new System.Drawing.Size(180, 22);
             this.TSEditEdObject.Text = "Изменить товар";
             this.TSEditEdObject.Click += new System.EventHandler(this.TSEdit_Click);
             // 
             // TSEditFind
             // 
             this.TSEditFind.Name = "TSEditFind";
-            this.TSEditFind.Size = new System.Drawing.Size(174, 22);
+            this.TSEditFind.Size = new System.Drawing.Size(180, 22);
             this.TSEditFind.Text = "Найти";
             this.TSEditFind.Click += new System.EventHandler(this.TSEditFind_Click);
             // 
             // TSEditClear
             // 
             this.TSEditClear.Name = "TSEditClear";
-            this.TSEditClear.Size = new System.Drawing.Size(174, 22);
+            this.TSEditClear.Size = new System.Drawing.Size(180, 22);
             this.TSEditClear.Text = "Очистить таблицу";
             this.TSEditClear.Click += new System.EventHandler(this.TSEditClear_Click);
             // 
@@ -302,8 +301,7 @@
             this.dgvFile.Size = new System.Drawing.Size(549, 412);
             this.dgvFile.TabIndex = 1;
             this.dgvFile.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvFile_CellDoubleClick);
-            this.dgvFile.DoubleClick += new System.EventHandler(this.DgvFile_DoubleClick);
-            this.dgvFile.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.DgvFile_MouseDoubleClick);
+            this.dgvFile.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvFile_CellValueChanged);
             // 
             // clCode
             // 
@@ -342,14 +340,12 @@
             this.openFileDialog.CheckFileExists = false;
             this.openFileDialog.DefaultExt = "txt";
             this.openFileDialog.Filter = "Текстовые файлы|*.txt|XML файлы|*.xml|Все файлы|*.*";
-            this.openFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.OpenFileDialog_FileOk);
             // 
             // TSFileClose
             // 
             this.TSFileClose.Name = "TSFileClose";
             this.TSFileClose.Size = new System.Drawing.Size(180, 22);
             this.TSFileClose.Text = "Закрыть";
-            this.TSFileClose.Click += new System.EventHandler(this.TSFileClose_Click);
             // 
             // saveAsFileDialog
             // 
@@ -372,7 +368,6 @@
             this.tsslAmount.Name = "tsslAmount";
             this.tsslAmount.Size = new System.Drawing.Size(140, 17);
             this.tsslAmount.Text = "Количество элементов: ";
-            this.tsslAmount.Click += new System.EventHandler(this.ToolStripStatusLabel1_Click);
             // 
             // btAdd
             // 

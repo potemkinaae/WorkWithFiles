@@ -17,13 +17,23 @@ namespace WorkWithFiles
         //Константа для количества элементов в StatusStrip
         const string StrAmount = "Количество элементов: ";
         //Создание списка продуктов
-        ProductList ProdList = new ProductList();
+        static ProductList ProdList = new ProductList();
+        //Тип открытого файла
+        static int FileExt;
+        //Путь открытого файла
+        static string FilePath;
+        //Был ли изменен файл
+        static bool IsModified;
         public MainForm()
         {
             InitializeComponent();
             //Очистка StatusStrip и установка символа в хэдерсел
             tsslAmount.Text = "";
             dgvFile.TopLeftHeaderCell.Value = "№";
+            TSFileSave.Enabled = false;
+            IsModified = false;
+            FilePath = "";
+            FileExt = 0;
         }
 
         private void MS_Click(object sender, EventArgs e)
@@ -52,6 +62,7 @@ namespace WorkWithFiles
                         using (TaskForm editForm = new TaskForm(ProdList[prodNum]))
                         {
                             editForm.Edit();
+                            //Если товара с таким кодом не существует или код не менялся (изменение без кода)
                             if (!ProdList.Exists(x => x.Code == editForm.Prod.Code) || editForm.Prod.Code == prodNum)
                             {
                                 ProdList[prodNum] = editForm.Prod;
@@ -79,6 +90,7 @@ namespace WorkWithFiles
                 if (!taskForm.isCancel)
                 {
                     int CodeNum;
+                    //Попытка парснуть код
                     if (!Int32.TryParse(taskForm.Info, out CodeNum))
                     {
                         MessageBox.Show("Вы ввели некорректный код!", "Ошибка");
@@ -90,7 +102,7 @@ namespace WorkWithFiles
                         using (TaskForm findForm = new TaskForm(ProdList[prodNum]))
                         {
                             findForm.Find();
-                            //
+                            //Если товара с таким кодом не существует или код не менялся (изменение без кода)
                             if (!ProdList.Exists(x => x.Code == findForm.Prod.Code) || findForm.Prod.Code == prodNum)
                             {
                                 ProdList[prodNum] = findForm.Prod;
@@ -117,10 +129,12 @@ namespace WorkWithFiles
                 if (!Form.isCancel)
                 {
                     int CodeNum;
+                    //Если не парсится в число
                     if (!Int32.TryParse(Form.Info, out CodeNum))
                     {
                         MessageBox.Show("Вы ввели некорректный код!", "Ошибка");
                     }
+                    //Если нашли товар с таким кодом
                     else if (ProdList.Exists(x => x.Code == CodeNum))
                     {
                         ProdList.Remove(ProdList.Find(x => x.Code == CodeNum));
@@ -141,6 +155,7 @@ namespace WorkWithFiles
                 addForm.Add();
                 if (!addForm.IsCancel)
                 {
+                    //Если товара с заданным кодом нет
                     if (!ProdList.Exists(x => x.Code == addForm.Prod.Code))
                     {
                         ProdList.Add(addForm.Prod);
@@ -152,82 +167,80 @@ namespace WorkWithFiles
                     }
                 }
             }
-            MSFile.Select();
+            //MSFile.Select();
         }
-
-        /*private void TSFileOpen_Click(object sender, EventArgs e)
-        {
-            //OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.ShowDialog();
-            ProdList.BinaryFileToProductList(openFileDialog.FileName);
-            ProdList.ProductListToDGV(dgvFile);
-        }*/
-
-        private void TSFileSaveAs_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void TSFileClose_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void MSFile_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        //Создание нового файла
         private void TSFileCreate_Click(object sender, EventArgs e)
         {
+            if (IsModified)
+            {
+                if (SaveModified() == DialogResult.Cancel)
+                {
+                    return;
+                }
+            }
             ProdList.Clear();
             ProdList.ProductListToDGV(dgvFile);
+            TSFileSave.Enabled = false;
+            IsModified = false;
         }
 
+        //Различные тесты
         private void Тест1ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            dgvFile.Rows[0].HeaderCell.Value = "1";
+            MessageBox.Show(Convert.ToString(IsModified));
         }
-
         private void Test2MI_Click(object sender, EventArgs e)
         {
             ProdList.ProductListToDGV(dgvFile);
         }
-
-        private void ToolStripStatusLabel1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void DgvFile_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            //tsslAmount.Text = StrAmount + Convert.ToString(ProdList.Count);
-            //MessageBox.Show(Convert.ToString(ProdList.Count));
-        }
-
+        //Очистка листа и таблицы
         private void TSEditClear_Click(object sender, EventArgs e)
         {
             ProdList.Clear();
             ProdList.ProductListToDGV(dgvFile);
         }
 
+        //При изменении количества строк
         private void RowsChanged(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            //MessageBox.Show(e.ToString());
-            dgvFile.Rows[e.RowIndex].HeaderCell.Value = e.RowIndex + 1;
             tsslAmount.Text = StrAmount + Convert.ToString(ProdList.Count);
         }
 
-        private void RowsChanged(object sender, DataGridViewRowsRemovedEventArgs e)
+
+        private static DialogResult SaveModified()
         {
-            tsslAmount.Text = StrAmount + Convert.ToString(ProdList.Count);
+            DialogResult dg = MessageBox.Show("Сохранить изменения?", "Сохранение", MessageBoxButtons.YesNoCancel);
+            if (dg == DialogResult.Yes)
+            {
+                Save();
+            }
+            return dg;
         }
 
-        private void MouseLeft(object sender, EventArgs e)
+        private static void Save()
         {
-            //MainForm.Select();
+            switch (FileExt)
+            {
+                case 1:
+                    ProdList.ProductListToTextFile(FilePath);
+                    break;
+                case 2:
+                    ProdList.ProductListToXMLFile(FilePath);
+                    break;
+                case 3:
+                    ProdList.ProductListToBinaryFile(FilePath);
+                    break;
+            }
+            IsModified = false;
         }
 
+        private void TSFileSave_Click(object sender, EventArgs e)
+        {
+            Save();
+        }
+
+        //Сохранение в текстовый файл
         private void ТекстовыйФайлToolStripMenuItem_Click(object sender, EventArgs e)
         {
             saveAsFileDialog.FilterIndex = 1;
@@ -235,24 +248,26 @@ namespace WorkWithFiles
             if (saveAsFileDialog.ShowDialog() == DialogResult.OK)
             {
                 ProdList.ProductListToTextFile(saveAsFileDialog.FileName);
+                TSFileSave.Enabled = true;
+                FileExt = 1;
+                FilePath = saveAsFileDialog.FileName;
+                IsModified = false;
             }
         }
-
+        //Сохранение в бинарный файл
         private void MenuSaveAsBinaryFile_Click(object sender, EventArgs e)
         {
             saveAsFileDialog.FilterIndex = 3;
             saveAsFileDialog.FileName = Path.GetFileName(openFileDialog.FileName);
             if (saveAsFileDialog.ShowDialog() == DialogResult.OK)
             {
-                ProdList.ProductListToBinaryFile(saveAsFileDialog.FileName);
+                TSFileSave.Enabled = true;
+                FileExt = 3;
+                FilePath = saveAsFileDialog.FileName;
+                IsModified = false;
             }
         }
-
-        private void DgvFile_UserAddedRow(object sender, DataGridViewRowEventArgs e)
-        {
-            e.Row.HeaderCell.Value = e.Row.Index + 1;
-        }
-
+        //Сохранение в XML файл
         private void MenuSaveAsXMLFile_Click(object sender, EventArgs e)
         {
             saveAsFileDialog.FilterIndex = 2;
@@ -260,19 +275,13 @@ namespace WorkWithFiles
             if (saveAsFileDialog.ShowDialog() == DialogResult.OK)
             {
                 ProdList.ProductListToXMLFile(saveAsFileDialog.FileName);
+                TSFileSave.Enabled = true;
+                FileExt = 2;
+                FilePath = saveAsFileDialog.FileName;
+                IsModified = false;
             }
         }
-
-        private void DgvFile_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            
-        }
-
-        private void DgvFile_DoubleClick(object sender, EventArgs e)
-        {
-            
-        }
-
+        //Изменение товара при двойном клике на строку
         private void DgvFile_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
@@ -296,15 +305,26 @@ namespace WorkWithFiles
                 }
             }
         }
-
+        //Открытие бинарного файла
         private void БинарныйФайлToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (IsModified)
+            {
+                if (SaveModified() == DialogResult.Cancel)
+                {
+                    return;
+                }
+            }
             openFileDialog.FilterIndex = 3;
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 if (ProdList.BinaryFileToProductList(openFileDialog.FileName))
                 {
                     ProdList.ProductListToDGV(dgvFile);
+                    TSFileSave.Enabled = true;
+                    FileExt = 3;
+                    FilePath = openFileDialog.FileName;
+                    IsModified = false;
                 }
                 else
                 {
@@ -312,20 +332,26 @@ namespace WorkWithFiles
                 }
             }
         }
-
-        private void OpenFileDialog_FileOk(object sender, CancelEventArgs e)
-        {
-
-        }
-
+        //Открытие текстового файла
         private void MenuOpenTextFile_Click(object sender, EventArgs e)
         {
+            if (IsModified)
+            {
+                if (SaveModified() == DialogResult.Cancel)
+                {
+                    return;
+                }
+            }
             openFileDialog.FilterIndex = 1;
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 if (ProdList.TextFileToProductList(openFileDialog.FileName))
                 {
                     ProdList.ProductListToDGV(dgvFile);
+                    TSFileSave.Enabled = true;
+                    FileExt = 1;
+                    FilePath = openFileDialog.FileName;
+                    IsModified = false;
                 }
                 else
                 {
@@ -333,26 +359,38 @@ namespace WorkWithFiles
                 }
             }
         }
-
+        //Открытие XML файла
         private void MenuOpenXMLFile_Click(object sender, EventArgs e)
         {
+            if (IsModified)
+            {
+                if (SaveModified() == DialogResult.Cancel)
+                {
+                    return;
+                }
+            }
             openFileDialog.FilterIndex = 2;
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 if (ProdList.XMLFileToProductList(openFileDialog.FileName))
                 {
                     ProdList.ProductListToDGV(dgvFile);
+                    TSFileSave.Enabled = true;
+                    FileExt = 2;
+                    FilePath = openFileDialog.FileName;
+                    IsModified = false;
                 }
                 else
                 {
-                    MessageBox.Show("Не удалось преобразовать XML файл в список из товаров");
+                    MessageBox.Show("Не удалось преобразовать текстовый файл в список из товаров");
                 }
             }
+
         }
 
-        private void TSFileOpen_Click_1(object sender, EventArgs e)
+        private void DgvFile_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-
+            IsModified = true;
         }
     }
 }
