@@ -72,7 +72,6 @@ namespace WorkWithFiles
         private void BtAct_Click(object sender, EventArgs e)
         {
             int Code;
-            SAcs Acs = new SAcs();
             string Name;
             double Price;
             int Amount;
@@ -88,6 +87,7 @@ namespace WorkWithFiles
             else if (Int32.TryParse(tbCode.Text,out Code) && tbName.Text != "" &&
                      Double.TryParse(tbPrice.Text,out Price) && Int32.TryParse(tbAmount.Text,out Amount))
             {
+                SAcs Acs = new SAcs(EnumAcs.None);
                 Acs.TryStringToAcs(tbType.Text);
                 Name = tbName.Text;
                 Prod = new Product(Code, Acs, Name, Price, Amount);

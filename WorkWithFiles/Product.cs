@@ -29,7 +29,17 @@ namespace WorkWithFiles
         }
 
         private SAcs kind;
-        public SAcs Kind;
+        public SAcs Kind
+        {
+            get
+            {
+                return kind;
+            }
+            set
+            {
+                kind = value;
+            }
+        }
 
         private string name;
 
@@ -81,7 +91,7 @@ namespace WorkWithFiles
         public Product(int ACode = 0, SAcs AKind = new SAcs(), string AName = "", double APrice = 0, int AAmount = 0)
         {
             code = ACode;
-            kind = AKind;
+            kind.Acs = AKind.Acs;
             name = AName;
             price = APrice;
             amount = AAmount;

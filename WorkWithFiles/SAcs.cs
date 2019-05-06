@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace WorkWithFiles
 {
+    [Serializable]
     public enum EnumAcs : byte { None, Videocard, OperativeMemory, HDD, SSD, Motherboard, Case, Cooler, PowerSupply, OpticalDrive, Soundcard, Cable }
     [Serializable]
     public struct SAcs
     {
-        public static EnumAcs Acs;
+        public EnumAcs Acs;
         static string[] AcsString = new string[12]
         { "Не определено","Видеокарта", "Оперативная память", "HDD", "SSD", "Материнская плата", "Корпус",
                   "Кулер", "Блок питания", "Дисковой привод", "Звуковая карта", "Кабель" };

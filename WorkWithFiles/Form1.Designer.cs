@@ -36,6 +36,9 @@
             this.MSFile = new System.Windows.Forms.ToolStripMenuItem();
             this.TSFileCreate = new System.Windows.Forms.ToolStripMenuItem();
             this.TSFileOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuOpenTextFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuOpenBinaryFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuOpenXMLFile = new System.Windows.Forms.ToolStripMenuItem();
             this.TSFileSave = new System.Windows.Forms.ToolStripMenuItem();
             this.TSFileSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuSaveAsTextFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -98,21 +101,46 @@
             // TSFileCreate
             // 
             this.TSFileCreate.Name = "TSFileCreate";
-            this.TSFileCreate.Size = new System.Drawing.Size(162, 22);
+            this.TSFileCreate.Size = new System.Drawing.Size(180, 22);
             this.TSFileCreate.Text = "Создать";
             this.TSFileCreate.Click += new System.EventHandler(this.TSFileCreate_Click);
             // 
             // TSFileOpen
             // 
+            this.TSFileOpen.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuOpenTextFile,
+            this.MenuOpenBinaryFile,
+            this.MenuOpenXMLFile});
             this.TSFileOpen.Name = "TSFileOpen";
-            this.TSFileOpen.Size = new System.Drawing.Size(162, 22);
+            this.TSFileOpen.Size = new System.Drawing.Size(180, 22);
             this.TSFileOpen.Text = "Открыть";
-            this.TSFileOpen.Click += new System.EventHandler(this.TSFileOpen_Click);
+            this.TSFileOpen.Click += new System.EventHandler(this.TSFileOpen_Click_1);
+            // 
+            // MenuOpenTextFile
+            // 
+            this.MenuOpenTextFile.Name = "MenuOpenTextFile";
+            this.MenuOpenTextFile.Size = new System.Drawing.Size(180, 22);
+            this.MenuOpenTextFile.Text = "Текстовый файл";
+            this.MenuOpenTextFile.Click += new System.EventHandler(this.MenuOpenTextFile_Click);
+            // 
+            // MenuOpenBinaryFile
+            // 
+            this.MenuOpenBinaryFile.Name = "MenuOpenBinaryFile";
+            this.MenuOpenBinaryFile.Size = new System.Drawing.Size(180, 22);
+            this.MenuOpenBinaryFile.Text = "Бинарный файл";
+            this.MenuOpenBinaryFile.Click += new System.EventHandler(this.БинарныйФайлToolStripMenuItem_Click);
+            // 
+            // MenuOpenXMLFile
+            // 
+            this.MenuOpenXMLFile.Name = "MenuOpenXMLFile";
+            this.MenuOpenXMLFile.Size = new System.Drawing.Size(180, 22);
+            this.MenuOpenXMLFile.Text = "XML файл";
+            this.MenuOpenXMLFile.Click += new System.EventHandler(this.MenuOpenXMLFile_Click);
             // 
             // TSFileSave
             // 
             this.TSFileSave.Name = "TSFileSave";
-            this.TSFileSave.Size = new System.Drawing.Size(162, 22);
+            this.TSFileSave.Size = new System.Drawing.Size(180, 22);
             this.TSFileSave.Text = "Сохранить";
             // 
             // TSFileSaveAs
@@ -122,7 +150,7 @@
             this.MenuSaveAsBinaryFile,
             this.MenuSaveAsXMLFile});
             this.TSFileSaveAs.Name = "TSFileSaveAs";
-            this.TSFileSaveAs.Size = new System.Drawing.Size(162, 22);
+            this.TSFileSaveAs.Size = new System.Drawing.Size(180, 22);
             this.TSFileSaveAs.Text = "Сохранить как...";
             // 
             // MenuSaveAsTextFile
@@ -136,14 +164,15 @@
             // 
             this.MenuSaveAsBinaryFile.Name = "MenuSaveAsBinaryFile";
             this.MenuSaveAsBinaryFile.Size = new System.Drawing.Size(165, 22);
-            this.MenuSaveAsBinaryFile.Text = "Бинарный";
+            this.MenuSaveAsBinaryFile.Text = "Бинарный файл";
             this.MenuSaveAsBinaryFile.Click += new System.EventHandler(this.MenuSaveAsBinaryFile_Click);
             // 
             // MenuSaveAsXMLFile
             // 
             this.MenuSaveAsXMLFile.Name = "MenuSaveAsXMLFile";
             this.MenuSaveAsXMLFile.Size = new System.Drawing.Size(165, 22);
-            this.MenuSaveAsXMLFile.Text = "XML";
+            this.MenuSaveAsXMLFile.Text = "XML файл";
+            this.MenuSaveAsXMLFile.Click += new System.EventHandler(this.MenuSaveAsXMLFile_Click);
             // 
             // MSChange
             // 
@@ -254,22 +283,27 @@
             this.dgvFile.Location = new System.Drawing.Point(0, 27);
             this.dgvFile.Name = "dgvFile";
             this.dgvFile.ReadOnly = true;
+            this.dgvFile.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ControlDark;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.Format = "N0";
             dataGridViewCellStyle3.NullValue = "1";
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvFile.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvFile.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle4.NullValue = "1";
             this.dgvFile.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvFile.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.LightGray;
             this.dgvFile.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvFile.Size = new System.Drawing.Size(549, 412);
             this.dgvFile.TabIndex = 1;
+            this.dgvFile.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvFile_CellDoubleClick);
+            this.dgvFile.DoubleClick += new System.EventHandler(this.DgvFile_DoubleClick);
+            this.dgvFile.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.DgvFile_MouseDoubleClick);
             // 
             // clCode
             // 
@@ -307,7 +341,8 @@
             // 
             this.openFileDialog.CheckFileExists = false;
             this.openFileDialog.DefaultExt = "txt";
-            this.openFileDialog.Filter = "Текстовые файлы|*.txt|XML файлы|*.xml";
+            this.openFileDialog.Filter = "Текстовые файлы|*.txt|XML файлы|*.xml|Все файлы|*.*";
+            this.openFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.OpenFileDialog_FileOk);
             // 
             // TSFileClose
             // 
@@ -320,7 +355,7 @@
             // 
             this.saveAsFileDialog.CreatePrompt = true;
             this.saveAsFileDialog.DefaultExt = "txt";
-            this.saveAsFileDialog.Filter = "Текстовые файлы|*.txt|XML файлы|*.xml";
+            this.saveAsFileDialog.Filter = "Текстовые файлы|*.txt|XML файлы|*.xml|Все файлы|*.*";
             // 
             // ss
             // 
@@ -357,6 +392,7 @@
             this.btEdit.TabIndex = 5;
             this.btEdit.Text = "Изменить";
             this.btEdit.UseVisualStyleBackColor = true;
+            this.btEdit.Click += new System.EventHandler(this.TSEdit_Click);
             // 
             // button3
             // 
@@ -366,6 +402,7 @@
             this.button3.TabIndex = 6;
             this.button3.Text = "Найти";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.TSEditFind_Click);
             // 
             // button4
             // 
@@ -375,6 +412,7 @@
             this.button4.TabIndex = 7;
             this.button4.Text = "Удалить";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.TSEditDelete_Click);
             // 
             // MainForm
             // 
@@ -438,6 +476,9 @@
         private System.Windows.Forms.ToolStripMenuItem MenuSaveAsTextFile;
         private System.Windows.Forms.ToolStripMenuItem MenuSaveAsBinaryFile;
         private System.Windows.Forms.ToolStripMenuItem MenuSaveAsXMLFile;
+        private System.Windows.Forms.ToolStripMenuItem MenuOpenTextFile;
+        private System.Windows.Forms.ToolStripMenuItem MenuOpenBinaryFile;
+        private System.Windows.Forms.ToolStripMenuItem MenuOpenXMLFile;
     }
 }
 
