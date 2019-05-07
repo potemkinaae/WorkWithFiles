@@ -139,7 +139,7 @@ namespace WorkWithFiles
             {
                 XmlElement prodNode = doc.CreateElement("Product");
                 AddChildNode("code", prod.Code.ToString(), prodNode, doc);
-                AddChildNode("kind", prod.Kind.Acs.ToString(), prodNode, doc);
+                AddChildNode("kind", prod.Kind.ToString(), prodNode, doc);
                 AddChildNode("name", prod.Name, prodNode, doc);
                 AddChildNode("price", prod.Price.ToString(), prodNode, doc);
                 AddChildNode("amount", prod.Amount.ToString(), prodNode, doc);
@@ -163,6 +163,7 @@ namespace WorkWithFiles
                         int Code = Convert.ToInt32(elem.ChildNodes[0].InnerText);
                         SAcs Acs = new SAcs();
                         Acs.TryStringToAcs(elem.ChildNodes[1].InnerText);
+                        //MessageBox.Show(elem.ChildNodes[1].InnerText);
                         string Name = elem.ChildNodes[2].InnerText;
                         if (Name == "")
                         {
@@ -215,7 +216,7 @@ namespace WorkWithFiles
                 DGV.Rows[i].Cells[0].Value = this[i].Code;
                 DGV.Rows[i].Cells[1].Value = this[i].Kind.ToString();
                 DGV.Rows[i].Cells[2].Value = this[i].Name;
-                DGV.Rows[i].Cells[3].Value = this[i].Price;
+                DGV.Rows[i].Cells[3].Value = this[i].Price.ToString("0.00");
                 DGV.Rows[i].Cells[4].Value = this[i].Amount;
             }
         }

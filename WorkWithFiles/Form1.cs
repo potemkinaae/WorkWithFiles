@@ -201,15 +201,12 @@ namespace WorkWithFiles
             ProdList.ProductListToDGV(dgvFile);
         }
 
-        //При изменении количества строк
-        private void RowsChanged(object sender, DataGridViewRowsAddedEventArgs e)
-        {
-            tsslAmount.Text = StrAmount + Convert.ToString(ProdList.Count);
-        }
-
-
         private static DialogResult SaveModified()
         {
+            if (FilePath == "")
+            {
+                return DialogResult.No;
+            }
             DialogResult dg = MessageBox.Show("Сохранить изменения?", "Сохранение", MessageBoxButtons.YesNoCancel);
             if (dg == DialogResult.Yes)
             {
@@ -261,6 +258,7 @@ namespace WorkWithFiles
             saveAsFileDialog.FileName = Path.GetFileName(openFileDialog.FileName);
             if (saveAsFileDialog.ShowDialog() == DialogResult.OK)
             {
+                ProdList.ProductListToBinaryFile(saveAsFileDialog.FileName);
                 TSFileSave.Enabled = true;
                 FileExt = 3;
                 FilePath = saveAsFileDialog.FileName;
@@ -288,12 +286,12 @@ namespace WorkWithFiles
             {
                 return;
             }
-            using (TaskForm editForm = new TaskForm(ProdList[e.RowIndex]))
+            using (TaskForm editForm = new TaskForm(ProdList[Convert.ToInt32(dgvFile.Rows[e.RowIndex].HeaderCell.Value) - 1]))
             {
                 editForm.Edit();
                 if (!editForm.IsCancel)
                 {
-                    if (!ProdList.Exists(x => x.Code == editForm.Prod.Code) || editForm.Prod.Code == ProdList[e.RowIndex].Code)
+                    if (!ProdList.Exists(x => x.Code == editForm.Prod.Code) || editForm.Prod.Code == ProdList[Convert.ToInt32(dgvFile.Rows[e.RowIndex].HeaderCell.Value) - 1].Code)
                     {
                         ProdList[e.RowIndex] = editForm.Prod;
                         ProdList.ProductListToDGV(dgvFile);
@@ -391,6 +389,64 @@ namespace WorkWithFiles
         private void DgvFile_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             IsModified = true;
+            tsslAmount.Text = StrAmount + Convert.ToString(ProdList.Count);
+        }
+
+        static Random rand = new Random();
+        private void TSEditRandom_Click(object sender, EventArgs e)
+        {
+            using (InputForm form = new InputForm("Ввод","Введите количество рандомных товаров: "))
+            {
+                form.ShowDialog();
+                int k;
+                if (!form.isCancel && Int32.TryParse(form.Info, out k))
+                {
+                    if (IsModified)
+                    {
+                        if (SaveModified() == DialogResult.Cancel)
+                        {
+                            return;
+                        }
+                    }
+
+                    ProdList.Clear();
+                    for (int i = 0; i < k; i++)
+                    {
+                        int Code = rand.Next(1, 1001 + k);
+                        while (i > 0 && ProdList.Exists(x => x.Code == Code))
+                        {
+                            Code = rand.Next(1, 1001 + k);
+                        };
+                        SAcs Acs = new SAcs((EnumAcs)rand.Next(1, 12));
+                        string Name = Acs.ToString() + Convert.ToString(i + 1);
+                        double Price = rand.NextDouble() * 10000;
+                        int Amount = rand.Next(0, 2001);
+                        Product prod = new Product(Code, Acs, Name, Price, Amount);
+                        ProdList.Add(prod);
+                    }
+                    ProdList.ProductListToDGV(dgvFile);
+                }
+            }
+        }
+        const int MaxAmount = 1000000;
+        private static int CompareProds(Product x, Product y)
+        {
+            return (int)x.Kind.Acs * MaxAmount - (int)y.Kind.Acs * MaxAmount + y.Amount - x.Amount;
+        }
+        private void SortTask(object sender, EventArgs e)
+        {
+            using (InputForm form = new InputForm("Ввод количества","Введите максимальное количество товара"))
+            {
+                int k;
+                form.ShowDialog();
+                if (!form.isCancel && Int32.TryParse(form.Info, out k))
+                {
+                    ProdList.RemoveAll(x => x.Amount > k);
+                    ProdList.Sort(CompareProds);
+                    ProdList.ProductListToDGV(dgvFile);
+                }
+            }
+
         }
     }
 }

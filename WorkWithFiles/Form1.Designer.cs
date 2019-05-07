@@ -50,9 +50,11 @@
             this.TSEditEdObject = new System.Windows.Forms.ToolStripMenuItem();
             this.TSEditFind = new System.Windows.Forms.ToolStripMenuItem();
             this.TSEditClear = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSEditRandom = new System.Windows.Forms.ToolStripMenuItem();
             this.MSTask = new System.Windows.Forms.ToolStripMenuItem();
             this.Test1MI = new System.Windows.Forms.ToolStripMenuItem();
             this.Test2MI = new System.Windows.Forms.ToolStripMenuItem();
+            this.сортировкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dgvFile = new System.Windows.Forms.DataGridView();
             this.clCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clType = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -68,6 +70,7 @@
             this.btEdit = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.btSort = new System.Windows.Forms.Button();
             this.MenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFile)).BeginInit();
             this.ss.SuspendLayout();
@@ -82,7 +85,7 @@
             this.MSTask});
             this.MenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip.Name = "MenuStrip";
-            this.MenuStrip.Size = new System.Drawing.Size(720, 24);
+            this.MenuStrip.Size = new System.Drawing.Size(780, 24);
             this.MenuStrip.TabIndex = 0;
             this.MenuStrip.Text = "menuStrip";
             // 
@@ -100,7 +103,7 @@
             // TSFileCreate
             // 
             this.TSFileCreate.Name = "TSFileCreate";
-            this.TSFileCreate.Size = new System.Drawing.Size(180, 22);
+            this.TSFileCreate.Size = new System.Drawing.Size(162, 22);
             this.TSFileCreate.Text = "Создать";
             this.TSFileCreate.Click += new System.EventHandler(this.TSFileCreate_Click);
             // 
@@ -111,7 +114,7 @@
             this.MenuOpenBinaryFile,
             this.MenuOpenXMLFile});
             this.TSFileOpen.Name = "TSFileOpen";
-            this.TSFileOpen.Size = new System.Drawing.Size(180, 22);
+            this.TSFileOpen.Size = new System.Drawing.Size(162, 22);
             this.TSFileOpen.Text = "Открыть";
             // 
             // MenuOpenTextFile
@@ -138,7 +141,7 @@
             // TSFileSave
             // 
             this.TSFileSave.Name = "TSFileSave";
-            this.TSFileSave.Size = new System.Drawing.Size(180, 22);
+            this.TSFileSave.Size = new System.Drawing.Size(162, 22);
             this.TSFileSave.Text = "Сохранить";
             this.TSFileSave.Click += new System.EventHandler(this.TSFileSave_Click);
             // 
@@ -149,7 +152,7 @@
             this.MenuSaveAsBinaryFile,
             this.MenuSaveAsXMLFile});
             this.TSFileSaveAs.Name = "TSFileSaveAs";
-            this.TSFileSaveAs.Size = new System.Drawing.Size(180, 22);
+            this.TSFileSaveAs.Size = new System.Drawing.Size(162, 22);
             this.TSFileSaveAs.Text = "Сохранить как...";
             // 
             // MenuSaveAsTextFile
@@ -180,7 +183,8 @@
             this.TSEditDelete,
             this.TSEditEdObject,
             this.TSEditFind,
-            this.TSEditClear});
+            this.TSEditClear,
+            this.TSEditRandom});
             this.MSChange.Name = "MSChange";
             this.MSChange.Size = new System.Drawing.Size(73, 20);
             this.MSChange.Text = "Изменить";
@@ -189,43 +193,51 @@
             // TSEditAdd
             // 
             this.TSEditAdd.Name = "TSEditAdd";
-            this.TSEditAdd.Size = new System.Drawing.Size(180, 22);
+            this.TSEditAdd.Size = new System.Drawing.Size(189, 22);
             this.TSEditAdd.Text = "Добавить";
             this.TSEditAdd.Click += new System.EventHandler(this.TSEditAdd_Click);
             // 
             // TSEditDelete
             // 
             this.TSEditDelete.Name = "TSEditDelete";
-            this.TSEditDelete.Size = new System.Drawing.Size(180, 22);
+            this.TSEditDelete.Size = new System.Drawing.Size(189, 22);
             this.TSEditDelete.Text = "Удалить";
             this.TSEditDelete.Click += new System.EventHandler(this.TSEditDelete_Click);
             // 
             // TSEditEdObject
             // 
             this.TSEditEdObject.Name = "TSEditEdObject";
-            this.TSEditEdObject.Size = new System.Drawing.Size(180, 22);
+            this.TSEditEdObject.Size = new System.Drawing.Size(189, 22);
             this.TSEditEdObject.Text = "Изменить товар";
             this.TSEditEdObject.Click += new System.EventHandler(this.TSEdit_Click);
             // 
             // TSEditFind
             // 
             this.TSEditFind.Name = "TSEditFind";
-            this.TSEditFind.Size = new System.Drawing.Size(180, 22);
+            this.TSEditFind.Size = new System.Drawing.Size(189, 22);
             this.TSEditFind.Text = "Найти";
             this.TSEditFind.Click += new System.EventHandler(this.TSEditFind_Click);
             // 
             // TSEditClear
             // 
             this.TSEditClear.Name = "TSEditClear";
-            this.TSEditClear.Size = new System.Drawing.Size(180, 22);
-            this.TSEditClear.Text = "Очистить таблицу";
+            this.TSEditClear.Size = new System.Drawing.Size(189, 22);
+            this.TSEditClear.Text = "Очистить";
             this.TSEditClear.Click += new System.EventHandler(this.TSEditClear_Click);
+            // 
+            // TSEditRandom
+            // 
+            this.TSEditRandom.Name = "TSEditRandom";
+            this.TSEditRandom.Size = new System.Drawing.Size(189, 22);
+            this.TSEditRandom.Text = "Заполнить случайно";
+            this.TSEditRandom.Click += new System.EventHandler(this.TSEditRandom_Click);
             // 
             // MSTask
             // 
             this.MSTask.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Test1MI,
-            this.Test2MI});
+            this.Test2MI,
+            this.сортировкаToolStripMenuItem});
             this.MSTask.Name = "MSTask";
             this.MSTask.Size = new System.Drawing.Size(70, 20);
             this.MSTask.Text = "Действие";
@@ -233,16 +245,23 @@
             // Test1MI
             // 
             this.Test1MI.Name = "Test1MI";
-            this.Test1MI.Size = new System.Drawing.Size(104, 22);
+            this.Test1MI.Size = new System.Drawing.Size(140, 22);
             this.Test1MI.Text = "Тест1";
             this.Test1MI.Click += new System.EventHandler(this.Тест1ToolStripMenuItem_Click);
             // 
             // Test2MI
             // 
             this.Test2MI.Name = "Test2MI";
-            this.Test2MI.Size = new System.Drawing.Size(104, 22);
+            this.Test2MI.Size = new System.Drawing.Size(140, 22);
             this.Test2MI.Text = "Тест2";
             this.Test2MI.Click += new System.EventHandler(this.Test2MI_Click);
+            // 
+            // сортировкаToolStripMenuItem
+            // 
+            this.сортировкаToolStripMenuItem.Name = "сортировкаToolStripMenuItem";
+            this.сортировкаToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.сортировкаToolStripMenuItem.Text = "Сортировка";
+            this.сортировкаToolStripMenuItem.Click += new System.EventHandler(this.SortTask);
             // 
             // dgvFile
             // 
@@ -250,6 +269,7 @@
             this.dgvFile.AllowUserToDeleteRows = false;
             this.dgvFile.AllowUserToResizeColumns = false;
             this.dgvFile.AllowUserToResizeRows = false;
+            this.dgvFile.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvFile.BackgroundColor = System.Drawing.SystemColors.ControlDark;
             this.dgvFile.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvFile.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
@@ -292,13 +312,14 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvFile.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvFile.RowHeadersWidth = 50;
             this.dgvFile.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             dataGridViewCellStyle4.NullValue = "1";
             this.dgvFile.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvFile.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.LightGray;
             this.dgvFile.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvFile.Size = new System.Drawing.Size(549, 412);
+            this.dgvFile.Size = new System.Drawing.Size(609, 412);
             this.dgvFile.TabIndex = 1;
             this.dgvFile.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvFile_CellDoubleClick);
             this.dgvFile.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvFile_CellValueChanged);
@@ -339,7 +360,7 @@
             // 
             this.openFileDialog.CheckFileExists = false;
             this.openFileDialog.DefaultExt = "txt";
-            this.openFileDialog.Filter = "Текстовые файлы|*.txt|XML файлы|*.xml|Все файлы|*.*";
+            this.openFileDialog.Filter = "Текстовые файлы|*.txt|XML файлы|*.xml|Все файлы|*";
             // 
             // TSFileClose
             // 
@@ -351,7 +372,7 @@
             // 
             this.saveAsFileDialog.CreatePrompt = true;
             this.saveAsFileDialog.DefaultExt = "txt";
-            this.saveAsFileDialog.Filter = "Текстовые файлы|*.txt|XML файлы|*.xml|Все файлы|*.*";
+            this.saveAsFileDialog.Filter = "Текстовые файлы|*.txt|XML файлы|*.xml|Все файлы|*";
             // 
             // ss
             // 
@@ -359,7 +380,7 @@
             this.tsslAmount});
             this.ss.Location = new System.Drawing.Point(0, 442);
             this.ss.Name = "ss";
-            this.ss.Size = new System.Drawing.Size(720, 22);
+            this.ss.Size = new System.Drawing.Size(780, 22);
             this.ss.TabIndex = 2;
             this.ss.Text = "statusStrip1";
             // 
@@ -371,7 +392,7 @@
             // 
             // btAdd
             // 
-            this.btAdd.Location = new System.Drawing.Point(555, 27);
+            this.btAdd.Location = new System.Drawing.Point(615, 27);
             this.btAdd.Name = "btAdd";
             this.btAdd.Size = new System.Drawing.Size(153, 36);
             this.btAdd.TabIndex = 4;
@@ -381,7 +402,7 @@
             // 
             // btEdit
             // 
-            this.btEdit.Location = new System.Drawing.Point(555, 69);
+            this.btEdit.Location = new System.Drawing.Point(615, 69);
             this.btEdit.Name = "btEdit";
             this.btEdit.Size = new System.Drawing.Size(153, 36);
             this.btEdit.TabIndex = 5;
@@ -391,7 +412,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(555, 111);
+            this.button3.Location = new System.Drawing.Point(615, 111);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(153, 36);
             this.button3.TabIndex = 6;
@@ -401,7 +422,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(555, 153);
+            this.button4.Location = new System.Drawing.Point(615, 153);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(153, 36);
             this.button4.TabIndex = 7;
@@ -409,12 +430,23 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.TSEditDelete_Click);
             // 
+            // btSort
+            // 
+            this.btSort.Location = new System.Drawing.Point(615, 195);
+            this.btSort.Name = "btSort";
+            this.btSort.Size = new System.Drawing.Size(153, 36);
+            this.btSort.TabIndex = 8;
+            this.btSort.Text = "Сортировать (задание)";
+            this.btSort.UseVisualStyleBackColor = true;
+            this.btSort.Click += new System.EventHandler(this.SortTask);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(720, 464);
+            this.ClientSize = new System.Drawing.Size(780, 464);
+            this.Controls.Add(this.btSort);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.btEdit);
@@ -422,7 +454,6 @@
             this.Controls.Add(this.ss);
             this.Controls.Add(this.dgvFile);
             this.Controls.Add(this.MenuStrip);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.MenuStrip;
             this.Name = "MainForm";
             this.Text = "Работа с файлами";
@@ -474,6 +505,9 @@
         private System.Windows.Forms.ToolStripMenuItem MenuOpenTextFile;
         private System.Windows.Forms.ToolStripMenuItem MenuOpenBinaryFile;
         private System.Windows.Forms.ToolStripMenuItem MenuOpenXMLFile;
+        private System.Windows.Forms.ToolStripMenuItem TSEditRandom;
+        private System.Windows.Forms.ToolStripMenuItem сортировкаToolStripMenuItem;
+        private System.Windows.Forms.Button btSort;
     }
 }
 
